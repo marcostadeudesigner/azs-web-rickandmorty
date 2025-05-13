@@ -7,7 +7,14 @@ const useEpisodeDetailPageData = (id:string)=> {
     variables: { id },
   });
 
-  return { loading, error, data };
+  const Totalcharacters = data?.episode?.characters.length || 0;
+
+  return {
+    loading,
+    error,
+    data,
+    Totalcharacters
+  };
 
 }
 

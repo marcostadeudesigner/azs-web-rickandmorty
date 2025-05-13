@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {ApolloProviderWrapper} from "@/src/providers/ApolloProviderWrapper";
+import { Header } from "@/src/components/Header/Header";
+import { Footer } from "@/src/components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,8 +24,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ApolloProviderWrapper>
+          <Header />
               {children}
-          </ApolloProviderWrapper>
+          <Footer />
+        </ApolloProviderWrapper>
       </body>
     </html>
   );

@@ -1,39 +1,38 @@
-import { useEffect } from "react";
-import { useLocalStorageSyncedState } from "@/src/hooks/useLocalStorage";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { SeenEpisodesStore } from './SeenEpisodes.types';
 
-function useEpisodeListPageSeenEpisodes() {
-        const [seenEpisodes, setSeenEpisodes] = useLocalStorageSyncedState<string[]>(
-        'seenEpisodes', 
-        []
-    );
-
-   // Load from localStorage on mount
-  useEffect(() => {
-    const savedSeen = localStorage.getItem('seenEpisodes');
-    
-    if (savedSeen) setSeenEpisodes(JSON.parse(savedSeen));
-  }, []);
-
-  // Save to localStorage when states change
-  useEffect(() => {
-    localStorage.setItem('seenEpisodes', JSON.stringify(seenEpisodes));
-  }, [ seenEpisodes]);
-
-
-
-  const markAsSeen = (episodeId: string) => {
-    setSeenEpisodes(prev => 
-      prev.includes(episodeId)
-        ? prev.filter(id => id !== episodeId)
-        : [...prev, episodeId]
-    );
-  };
-
-    return {
-        seenEpisodes,
-        markAsSeen
+ const useSeenEpisodesStore = create<SeenEpisodesStore>()(
+  persist(
+    (set, get) => ({
+      seenEpisodes: [],
+      markAsSeen: (episodeId: string) => {
+        set((state) => {
+          if (state.seenEpisodes.includes(episodeId)) {
+            return {
+              seenEpisodes: state.seenEpisodes.filter(id => id !== episodeId)
+            };
+          }
+          return {
+            seenEpisodes: [...state.seenEpisodes, episodeId]
+          };
+        });
+      },
+    }),
+    {
+      name: 'seen-episodes-storage', // key in localStorage
     }
+  )
+);
 
-}
+ const useEpisodeListPageSeenEpisodes = () => {
+  const seenEpisodes = useSeenEpisodesStore((state) => state.seenEpisodes);
+  const markAsSeen = useSeenEpisodesStore((state) => state.markAsSeen);
+
+  return {
+    seenEpisodes,
+    markAsSeen,
+  };
+};
 
 export { useEpisodeListPageSeenEpisodes };

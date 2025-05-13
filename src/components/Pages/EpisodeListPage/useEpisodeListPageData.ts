@@ -15,11 +15,11 @@ function useEpisodeListPageData() {
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const loadMoreEpisodes = () => {
-    if (info.next) {
+    if (info?.next) {
       setIsFetchingMore(true);
       fetchMore({
         variables: {
-          page: info.next,
+          page: info?.next,
         },
         updateQuery: (prev, { fetchMoreResult }) => {
           setIsFetchingMore(false);

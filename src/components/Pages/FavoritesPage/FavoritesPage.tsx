@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { useFavoritesPageData } from "./useFavoritesPageData";
+import { AvatarGroup } from "../../AvatarGroup";
 
 
 
@@ -25,21 +26,21 @@ const FavoritesPage = ()=> {
         <div className="text-center py-12">
           <p className="text-gray-600 mb-4">No favorite episodes yet!</p>
           <Link
-            href="/episodes"
-            className="inline-block px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            href="/"
+            className="inline-block px-6 py-2 border border-teal-200 text-white rounded-lg hover:bg-teal-600"
           >
             Browse Episodes
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {favoriteEpisodes.map((episode: any) => (
             <div
               key={episode.id}
-              className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow relative"
+              className="border border-teal-200 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow relative"
             >
               <Link href={`/episodes/${encodeURIComponent(episode.id)}`}>
-                <div className="pt-8">
+                <div >
                   <h3 className="text-lg font-bold mb-2">{episode.name}</h3>
                   <p className="text-gray-600 mb-2">
                     Characters: {episode.characters.length}
@@ -50,16 +51,9 @@ const FavoritesPage = ()=> {
                   <p className="text-gray-600 mb-2">
                     Air Date: {episode.air_date}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {episode.characters.slice(0, 5).map((character: any) => (
-                      <img
-                        key={character.id}
-                        src={character.image}
-                        alt="Character"
-                        className="w-10 h-10 rounded-full"
-                      />
-                    ))}
-                  </div>
+                  <AvatarGroup
+                characters={episode.characters}
+              />
                 </div>
               </Link>
             </div>
