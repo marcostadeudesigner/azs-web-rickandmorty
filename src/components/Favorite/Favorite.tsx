@@ -14,7 +14,7 @@ const Favorite = ({ episode }: { episode: Episode }) => {
         e.preventDefault();
         toggleFavorite(episode.id);
         }}
-        className="absolute top-2 right-2 p-2 hover:text-yellow-500"
+        className="absolute top-2 right-2 p-2 cursor-pointer hover:text-yellow-500"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
             {isFavorite ? <FaStar className="text-yellow-500" /> : <FaRegStar />}

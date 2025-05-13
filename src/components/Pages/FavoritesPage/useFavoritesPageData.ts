@@ -1,4 +1,3 @@
-import { useLocalStorageSyncedState } from "@/src/hooks/useLocalStorage";
 import { useQuery } from "@apollo/client";
 import { GET_FAVORITE_EPISODES } from "./FavoritesPage.operations";
 import { useEpisodeListPageFavorites } from '../../Favorite/useEpisodeListPageFavorites';

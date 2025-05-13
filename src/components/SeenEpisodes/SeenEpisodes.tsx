@@ -16,7 +16,7 @@ const SeenEpisodes = ({ episode }: { episode: Episode }) => {
         className="absolute top-2 left-2 p-2   hover:text-blue-500"
         aria-label={isSeen ? "Mark as unseen" : "Mark as seen"}
         >
-          {isSeen ? <FaEye className="text-blue-500" /> : <FaRegEye className="text-gray-300" />}
+          {isSeen ? <FaEye className="text-teal-500 cursor-pointer" /> : <FaRegEye className="text-gray-300 cursor-pointer hover:text-teal-500" />}
         </button>
     )
 }
