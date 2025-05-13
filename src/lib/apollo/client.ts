@@ -12,7 +12,7 @@ import {
 
 export function makeClient() {
   const httpLink = new HttpLink({
-    uri: 'https://rickandmortyapi.com/graphql',
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'https://rickandmortyapi.com/graphql',
   });
 
   return new ApolloClient({
