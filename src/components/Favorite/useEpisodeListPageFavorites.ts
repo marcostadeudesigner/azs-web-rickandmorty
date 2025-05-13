@@ -1,35 +1,39 @@
-import { useEffect } from "react";
-import { useLocalStorageSyncedState } from "@/src/hooks/useLocalStorage";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { FavoritesStore } from './Favorite.types';
 
-const useEpisodeListPageFavorites = ()=> {
-
-    const [favorites, setFavorites] = useLocalStorageSyncedState<string[]>(
-        'favorites', 
-        []
-    );
-    const toggleFavorite = (episodeId: string) => {
-        setFavorites(prev => 
-            prev.includes(episodeId)
-            ? prev.filter(id => id !== episodeId)
-            : [...prev, episodeId]
-        );
-    };
-
-    useEffect(() => {
-        const savedFavorites = localStorage.getItem('favorites');
-        
-        if (savedFavorites) setFavorites(JSON.parse(savedFavorites));
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }, [favorites]);
-
-    return {
-        favorites,
-        toggleFavorite
+const useFavoritesStore = create<FavoritesStore>()(
+  persist(
+    (set, get) => ({
+      favorites: [],
+      toggleFavorite: (episodeId: string) => {
+        set((state) => {
+          if (state.favorites.includes(episodeId)) {
+            return {
+              favorites: state.favorites.filter(id => id !== episodeId)
+            };
+          }
+          return {
+            favorites: [...state.favorites, episodeId]
+          };
+        });
+      },
+    }),
+    {
+      name: 'favorites-storage', 
     }
+  )
+);
 
-}
+
+const useEpisodeListPageFavorites = () => {
+  const favorites = useFavoritesStore((state) => state.favorites);
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+
+  return {
+    favorites,
+    toggleFavorite
+  };
+};
 
 export { useEpisodeListPageFavorites };
