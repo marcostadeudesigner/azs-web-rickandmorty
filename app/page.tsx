@@ -1,5 +1,4 @@
-
-import EpisodeListPage from "@/src/components/EpisodeListPage/EpisodeListPage";
+import { EpisodeListPage } from "@/src/components/Pages/EpisodeListPage/EpisodeListPage";
 
 export default function Home() {
   return (
