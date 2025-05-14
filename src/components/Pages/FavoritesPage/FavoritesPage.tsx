@@ -17,7 +17,7 @@ const FavoritesPage = ()=> {
   const favoriteEpisodes = data?.episodesByIds || [];
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-full mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
         <FaStar className="text-yellow-500" /> Favorite Episodes
       </h1>
@@ -33,7 +33,7 @@ const FavoritesPage = ()=> {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-6">
           {favoriteEpisodes.map((episode: any) => (
             <div
               key={episode.id}
