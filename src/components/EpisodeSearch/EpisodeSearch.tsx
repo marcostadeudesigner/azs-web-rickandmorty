@@ -19,26 +19,32 @@ const EpisodeSearch = ({ setIsModalOpen }: { setIsModalOpen: (open: boolean) => 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
         />
-        {loading && !data && (<p>Initial loading...</p>)}
-        {error && (<p>Error: {error.message}</p>)}
-        {searchQuery.length >= 3 && data?.episodes?.results && (
+
+      
+        {searchQuery.length >= 3 && (
             <div className=" top-full left-0 right-0 max-h-[30vh] text-white h-full overflow-y-auto mt-2 rounded-lg shadow-lg ">
-            {data.episodes.results.map((episode: Episode) => (
-                <Link
+            {loading && !data && <p>Initial loading...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {data?.episodes?.results && data.episodes.results.length > 0 ? (
+                data.episodes.results.map((episode: Episode) => (
+                    <Link
                     key={episode.id}
                     href={`/episodes/${encodeURIComponent(episode.id)}`}
-                >
-                    <div
-                    className="p-2 hover:bg-gray-100 hover:text-slate-950 cursor-pointer border-b border-gray-200"
-                    onClick={() => { markAsSeen(episode.id); setIsModalOpen(false); }}
                     >
-                    <div className="font-medium text-lg">{episode.name}</div>
-                    <div className="text-sm text-gray-600">
+                    <div
+                        className="p-2 hover:bg-gray-100 hover:text-slate-950 cursor-pointer border-b border-gray-200"
+                        onClick={() => { markAsSeen(episode.id); setIsModalOpen(false); }}
+                    >
+                        <div className="font-medium text-lg">{episode.name}</div>
+                        <div className="text-sm text-gray-600">
                         {episode.episode} | {episode.air_date} | Characters {episode.characters.length}
+                        </div>
                     </div>
-                    </div>
-                </Link>
-            ))}
+                    </Link>
+                ))
+            ) : (
+                !loading && <div className="p-2 text-gray-400">No episodes found.</div>
+            )}
             </div>
         )}
         </div>
