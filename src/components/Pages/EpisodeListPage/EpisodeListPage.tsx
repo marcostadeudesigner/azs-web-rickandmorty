@@ -65,8 +65,8 @@ const EpisodeListPage = () => {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">All Episodes</h1>
       </div>
-      <div className="container mx-auto p-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="w-full mx-auto p-6">
+      <div className="grid sm:grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-6">
       {episodesList}
       </div>
 
