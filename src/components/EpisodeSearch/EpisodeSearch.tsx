@@ -4,7 +4,7 @@ import {useEpisodeSearchData} from "./useEpisodeSearchData";
 import { useEpisodeListPageSeenEpisodes } from "../SeenEpisodes/useEpisodeListPageSeenEpisodes";
 import { useEpisodeSearch } from "./useEpisodeSearch";
 
-const EpisodeSearch = () => {
+const EpisodeSearch = ({ setIsModalOpen }: { setIsModalOpen: (open: boolean) => void }) => {
 
     const { searchQuery, setSearchQuery, data, error, loading } = useEpisodeSearchData();
     const { markAsSeen } = useEpisodeListPageSeenEpisodes();
@@ -27,11 +27,10 @@ const EpisodeSearch = () => {
                 <Link
                     key={episode.id}
                     href={`/episodes/${encodeURIComponent(episode.id)}`}
-                    onClick={() => {markAsSeen(episode.id);}}
                 >
                     <div
-                   
                     className="p-2 hover:bg-gray-100 hover:text-slate-950 cursor-pointer border-b border-gray-200"
+                    onClick={() => { markAsSeen(episode.id); setIsModalOpen(false); }}
                     >
                     <div className="font-medium text-lg">{episode.name}</div>
                     <div className="text-sm text-gray-600">

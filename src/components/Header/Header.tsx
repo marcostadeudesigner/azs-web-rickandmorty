@@ -36,7 +36,7 @@ const Header = () => {
             />
         </Link>
         <Modal title="Search Episodes" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <EpisodeSearch />
+        <EpisodeSearch setIsModalOpen={setIsModalOpen} />
       </Modal>
         </header>
     )
